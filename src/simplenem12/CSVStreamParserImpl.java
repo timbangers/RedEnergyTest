@@ -12,7 +12,6 @@ public class CSVStreamParserImpl implements SimpleNem12Parser {
     public Collection<MeterRead> parseSimpleNem12(File simpleNem12File) {
         Collection<MeterRead> collection = null;
         try {
-
             BufferedReader reader = new BufferedReader(new FileReader(simpleNem12File));
             List<String []> stringArrays = reader.lines().map(mapToStringArray).skip(1)
                     .filter(remove900).collect(toList());

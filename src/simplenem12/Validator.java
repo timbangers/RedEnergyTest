@@ -1,5 +1,7 @@
 package simplenem12;
 
+import java.util.List;
+
 public class Validator {
     /**
      * This checks if the record type 200 has valid values
@@ -22,6 +24,18 @@ public class Validator {
         return false;
     }
 
-
-
+    /**
+     * This checks if the file is valid, should begin with 100 and end in 900
+     * @param linesArray
+     * @return boolean
+     */
+    public static boolean isFileValid(List<String[]> linesArray) {
+        if (!"100".equalsIgnoreCase(linesArray.get(0)[0])) {
+            return false;
+        }
+        if (!"900".equalsIgnoreCase(linesArray.get(linesArray.size()-1)[0])) {
+            return false;
+        }
+        return true;
+    }
 }

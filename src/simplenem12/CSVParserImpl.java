@@ -14,6 +14,7 @@ public class CSVParserImpl implements SimpleNem12Parser {
     @Override
     public Collection<MeterRead> parseSimpleNem12(File simpleNem12File) {
         List<String[]> linesArray = new ArrayList<>();
+        Collection<MeterRead> collection = null;
         try {
             //value [0] record type
             //value [1] nmi if 200, date if 300, null if 100/900
@@ -29,8 +30,11 @@ public class CSVParserImpl implements SimpleNem12Parser {
             e.printStackTrace();
         }
 
-        this.filterList(linesArray);
-        Collection<MeterRead> collection = MeterReadMapper.mapValues(linesArray);
+        if (Validator.isFileValid(linesArray)){
+            this.filterList(linesArray);
+            collection = MeterReadMapper.mapValues(linesArray);
+
+        }
         return collection;
     }
 
