@@ -18,19 +18,21 @@ public class TestHarness {
 
     public static void main(String[] args) {
         File simpleNem12File = new File("SimpleNem12.csv");
+        File smpleNem12WithInvalidFirstAndLast = new File("SimpleNem12WithInvalidFirstAndLast.csv");
 
         // Uncomment below to try out test harness.
         Collection<MeterRead> meterReads = new CSVParserImpl().parseSimpleNem12(simpleNem12File);
-
         MeterRead read6123456789 = meterReads.stream().filter(mr -> mr.getNmi().equals("6123456789")).findFirst().get();
         System.out.println(String.format("Total volume for NMI 6123456789 is %f", read6123456789.getTotalVolume()));  // Should be -36.84
-
         MeterRead read6987654321 = meterReads.stream().filter(mr -> mr.getNmi().equals("6987654321")).findFirst().get();
         System.out.println(String.format("Total volume for NMI 6987654321 is %f", read6987654321.getTotalVolume()));  // Should be 14.33
+        //Using stream parser version
         Collection<MeterRead> meterReadWithStream = new CSVStreamParserImpl().parseSimpleNem12(simpleNem12File);
         MeterRead read6123456789WithStream  = meterReadWithStream.stream().filter(mr -> mr.getNmi().equals("6123456789")).findFirst().get();
+        //Testing with invalid file
+        Collection<MeterRead> meterReadsWithInvalidFile = new CSVParserImpl().parseSimpleNem12(smpleNem12WithInvalidFirstAndLast);
+        System.out.println(String.format("Collection size is %d, should be 0", meterReadsWithInvalidFile.size()));
 
-        System.out.println(String.format("Total volume for NMI 6987654321 is %f", read6123456789WithStream.getTotalVolume()));  // Should be 14.33
 
     }
 }
